@@ -2,17 +2,20 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ResultView.scss';
 
+// Interface for postcode entry data structure
 interface PostcodeEntry {
   id: string;
   postcode: string;
 }
 
+// Interface for location state containing journey data
 interface LocationState {
   journeyData: string;
   postcodes: PostcodeEntry[];
   travelMode: 'Driving' | 'Bicycling' | 'Walking';
 }
 
+// Interface for individual journey segment data
 interface JourneySegment {
   duration: number;
   distance: number;
@@ -20,11 +23,13 @@ interface JourneySegment {
   toPostcode: string;
 }
 
+// Component for displaying journey calculation results
 const ResultView: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const state = location.state as LocationState;
 
+  // Handle missing or invalid journey data
   if (!state?.journeyData || !state?.postcodes) {
     return (
       <div className="result-view result-view--error">
@@ -39,6 +44,7 @@ const ResultView: React.FC = () => {
     );
   }
 
+  // Parse raw journey data into structured segments with totals
   const parseJourneyData = (): {
     segments: JourneySegment[];
     totalDistance: number;
@@ -68,6 +74,7 @@ const ResultView: React.FC = () => {
     return { segments: journeySegments, totalDistance, totalDuration };
   };
 
+  // Format duration from minutes to hours and minutes
   const formatDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = Math.round(minutes % 60);
@@ -76,6 +83,7 @@ const ResultView: React.FC = () => {
       : `${remainingMinutes}m`;
   };
 
+  // Format distance with one decimal place
   const formatDistance = (miles: number): string => {
     return `${miles.toFixed(1)} miles`;
   };
@@ -87,6 +95,7 @@ const ResultView: React.FC = () => {
       <div className="result-view__content">
         <h2>Journey Summary</h2>
         
+        {/* Display selected travel mode with icon */}
         <div className="result-view__mode">
           <span className="mode-icon">
             {state.travelMode === 'Driving' && '🚗'}
@@ -96,6 +105,7 @@ const ResultView: React.FC = () => {
           <span className="mode-text">{state.travelMode} Route</span>
         </div>
 
+        {/* Display journey totals */}
         <div className="result-view__totals">
           <div className="total-item">
             <span className="total-label">Total Distance</span>
@@ -107,6 +117,7 @@ const ResultView: React.FC = () => {
           </div>
         </div>
 
+        {/* Display individual journey segments */}
         <div className="result-view__segments">
           <h3>Journey Segments</h3>
           {segments.map((segment, index) => (
@@ -130,6 +141,7 @@ const ResultView: React.FC = () => {
           ))}
         </div>
 
+        {/* Navigation button to start new journey */}
         <button
           onClick={() => navigate('/')}
           className="result-view__button"
