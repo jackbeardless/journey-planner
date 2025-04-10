@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './JourneyEntryView.scss';
 
-// Interface defining the structure of a postcode entry
 interface PostcodeEntry {
   id: string;
   postcode: string;
@@ -17,7 +16,7 @@ const JourneyEntryView: React.FC = () => {
   const [error, setError] = useState('');  // Error message state
   const [travelMode, setTravelMode] = useState<'Driving' | 'Bicycling' | 'Walking'>('Driving');  // Selected travel mode
 
-  // Regular expression for UK postcode validation
+  // Defining the structure for UK postcode validation!
   const postcodeRegex = /^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i;
 
   // Validates if a given postcode matches UK format
@@ -30,37 +29,36 @@ const JourneyEntryView: React.FC = () => {
     e.preventDefault();
     const trimmedPostcode = postcode.trim().toUpperCase();
 
-    // Validate postcode format
+    // Calls the validat postcode function and throws error if it fails
     if (!validatePostcode(trimmedPostcode)) {
       setError('Please enter a valid UK postcode');
       return;
     }
 
-    // Check for duplicate postcodes
+    // Check for duplicate postcodes and throws error if found
     if (postcodes.some(p => p.postcode === trimmedPostcode)) {
       setError('This postcode has already been added');
       return;
     }
 
-    // Add new postcode to the list with unique ID
+    // Add new postcode to the list with a unique id
     setPostcodes([...postcodes, { id: Date.now().toString(), postcode: trimmedPostcode }]);
     setPostcode('');
     setError('');
   };
 
-  // Removes a postcode from the route by its ID
+  // Removes a postcode from the route by the unique id
   const handleRemovePostcode = (id: string) => {
     setPostcodes(postcodes.filter(p => p.id !== id));
   };
 
-  // Handles reordering postcodes in the route
+  // Handles reordering postcodes in the route, up or down (changes priority of postcodes in the route e.g 1-2 2-3)
   const handleMovePostcode = (id: string, direction: 'up' | 'down') => {
     const index = postcodes.findIndex(p => p.id === id);
-    // Prevent moving if at the start/end of the list
+    // Prevent moving up if at start or moving down if at end
     if ((direction === 'up' && index === 0) || 
         (direction === 'down' && index === postcodes.length - 1)) return;
 
-    // Swap postcodes to reorder
     const newPostcodes = [...postcodes];
     const newIndex = direction === 'up' ? index - 1 : index + 1;
     [newPostcodes[index], newPostcodes[newIndex]] = [newPostcodes[newIndex], newPostcodes[index]];
@@ -69,11 +67,13 @@ const JourneyEntryView: React.FC = () => {
 
   // Calculates the journey based on selected postcodes and travel mode
   const handleCalculateJourney = async () => {
-    // Ensure at least two postcodes are provided
+    // Ensure at least two postcodes are provided otherwise throws error
     if (postcodes.length < 2) {
       setError('Please add at least two postcodes to calculate a journey');
       return;
     }
+
+    setError('');
 
     // Prepare route data for API request
     const route = encodeURIComponent(
@@ -83,7 +83,6 @@ const JourneyEntryView: React.FC = () => {
     try {
       // Determine API base URL based on environment
       const API_BASE = process.env.NODE_ENV === 'development' ? '/api' : '';
-      const API_URL = process.env.REACT_APP_API_URL || 'https://journeyplanner-api.example.com';
       
       // Make API request to calculate journey
       const response = await fetch(
@@ -97,7 +96,7 @@ const JourneyEntryView: React.FC = () => {
           credentials: 'include'
         }
       );
-      
+        
       if (!response.ok) {
         throw new Error(`Failed to calculate journey: ${response.statusText}`);
       }
@@ -107,7 +106,7 @@ const JourneyEntryView: React.FC = () => {
         throw new Error('No journey data received');
       }
       
-      // Navigate to results view with journey data
+      // switch to the results view with our journey data
       navigate('/result', { state: { journeyData: data, postcodes: postcodes, travelMode: travelMode } });
     } catch (err) {
       console.error('Journey calculation error:', err);
@@ -118,10 +117,10 @@ const JourneyEntryView: React.FC = () => {
   return (
     <div className="journey-entry">
       <div className="journey-entry__container">
-        <h2>Plan Your Journey</h2>
-        
-        {/* Postcode input form with validation */}
-        <form onSubmit={handleAddPostcode} className="journey-entry__form">
+        <>
+          <h2>Plan Your Journey</h2>
+          <form onSubmit={handleAddPostcode} className="journey-entry__form">
+          {/* Postcode input form with validation */}
           <div className="input-group">
             <input
               type="text"
@@ -173,7 +172,7 @@ const JourneyEntryView: React.FC = () => {
               ))}
             </div>
 
-            {/* Travel mode selection */}
+            {/* Travel mode selection (bike, car or walking) */}
             <div className="journey-entry__travel-mode">
               <h3>Travel Mode</h3>
               <div className="travel-mode-selector">
@@ -205,6 +204,7 @@ const JourneyEntryView: React.FC = () => {
         >
           Calculate Journey
         </button>
+        </>
       </div>
     </div>
   );

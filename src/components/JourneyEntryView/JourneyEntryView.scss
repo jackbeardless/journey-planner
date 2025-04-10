@@ -1,19 +1,20 @@
+@import '../../styles/variables';
+
 .journey-entry {
   min-height: 100vh;
-  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  background: $gradient-primary;
   padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 
   &__container {
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     border-radius: 12px;
     padding: 2rem;
     width: 100%;
     max-width: 600px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
 
     h2 {
       color: #2c3e50;

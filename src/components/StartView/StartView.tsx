@@ -2,10 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StartView.scss';
 
-/**
- * StartView component - The initial view of the journey planner
- * Displays a welcome message and a button to start planning the journey
- */
+// Simple start view
 const StartView: React.FC = () => {
   const navigate = useNavigate();
 

@@ -1,6 +1,8 @@
+@import '../../styles/variables';
+
 .result-view {
   min-height: 100vh;
-  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  background: $gradient-primary;
   padding: 2rem;
   display: flex;
   justify-content: center;
@@ -11,13 +13,12 @@
   }
 
   &__content {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
+    background: white;
+    border-radius: $border-radius-md;
     padding: 2rem;
     width: 100%;
     max-width: 600px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    box-shadow: $shadow-md;
 
     h2 {
       color: #2c3e50;
@@ -40,10 +41,11 @@
     margin-bottom: 2rem;
 
     .total-item {
-      background-color: #f8f9fa;
+      background: white;
       padding: 1.5rem;
-      border-radius: 8px;
+      border-radius: $border-radius-sm;
       text-align: center;
+      box-shadow: $shadow-sm;
 
       .total-label {
         display: block;
@@ -63,12 +65,12 @@
 
   &__segments {
     .segment {
-      background-color: white;
-      border-radius: 8px;
+      background: white;
+      border-radius: $border-radius-sm;
       padding: 1rem;
       margin-bottom: 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      transition: transform 0.2s;
+      box-shadow: $shadow-sm;
+      transition: all $transition-medium;
 
       &:hover {
         transform: translateX(4px);

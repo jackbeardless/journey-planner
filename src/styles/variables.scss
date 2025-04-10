@@ -1,18 +1,19 @@
 // Colors
 $primary-color: #4a90e2;
-$primary-dark: #357abd;
+$primary-dark: #2171cd;
 $success-color: #27ae60;
-$success-dark: #219a52;
-$error-color: #e74c3c;
-$error-dark: #c0392b;
-$text-primary: #2c3e50;
-$text-secondary: #5d6d7e;
-$text-light: #7f8c8d;
-$border-color: #e0e0e0;
-$background-light: #f8f9fa;
+$success-dark: #219653;
+$error-color: #eb5757;
+$error-dark: #c53030;
+$text-primary: #2d3748;
+$text-secondary: #4a5568;
+$text-light: #718096;
+$border-color: #e2e8f0;
+$background-light: #f8fafc;
 
 // Gradients
-$gradient-primary: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+$gradient-primary: linear-gradient(135deg, #4a90e2 0%, #357abd 50%, #2171cd 100%);
+$gradient-glass: linear-gradient(120deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
 
 // Spacing
 $spacing-xs: 0.5rem;
@@ -25,8 +26,8 @@ $border-radius-sm: 8px;
 $border-radius-md: 12px;
 
 // Shadows
-$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-$shadow-md: 0 8px 32px rgba(0, 0, 0, 0.1);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
 
 // Breakpoints
 $mobile-breakpoint: 480px;
